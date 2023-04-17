@@ -1,66 +1,67 @@
 #include<bits/stdc++.h>
-#include<string>
 using namespace std;
 
-int rou=1.2, per=1.1; // 趟 / 圈
+double circle_tire = 1.1;
+double lap_tire = 1.2;
 
-int best( int need )
+double sigma( int n , int lap )
 {
-	for(int i = need ; i != 0 ; i--)
-	{ 
-	} 
+	double total_time = 0;
+	for( int i=1 ; i!=n+1 ; i++ )
+		total_time += pow( circle_tire , i-1 )*pow(lap_tire , lap-1);
+	return total_time;
 }
-
-struct count{
-	int time;
-	int man;
-};
-// n,man -> cin each man time -> n -> ? for n -> 1
-// time/(5,3,2)
-
-string round( int n , int man )
-{
-	
-	vector<int> man_time(n);
-	vector<struct count> v;
-	for( int i=0 ; i<man ; i++)
-		cin >> man_time[i];
-		
-	// 5 3 -> 2
-	// 3 1 1
-	// 2 2 1
-	
-	// 8 4 -> 3
-	// 4 1 1 1
-	// 3 2 1 1
-	// 2 2 2 1
-	
-	// 7 2 -> 3
-	// 6 1
-	// 5 2
-	// 4 3
-	
-	
-
-	
-	stringstream ss;
-	ss << time << "(" << man << ")";
-	string s = ss.str();
-	return s;
-}
-
 
 int main()
 {
-	int n=1; // 圈數 
-	int man=1; // 人數 
-	
-	cout << "請輸入 圈數、人數" << endl;
-	cin >> n >> man;
-	
-	// cout << n << " " << man << " " << max  << " " << min << " " << rou << " " << per;
-		
-	cout << round( n , man);	
-	
-	
+
+	int n;
+	int best_lap = 1;
+	cin >> n;
+	for( int lap = 1 ; lap <= n ; lap++ ) // if lap = 2, n = 1 1
+	{
+		double temp = sigma( n , lap );
+		cout << temp << " ";
+	}
 }
+
+
+
+
+
+
+
+//#include <iostream>
+//#include <cmath>
+//#include <climits>
+//
+//using namespace std;
+//
+//int main() {
+//    int n;
+//    double circle_tire_ratio, lap_tire_ratio, lap_time;
+//    cin >> n >> circle_tire_ratio >> lap_tire_ratio >> lap_time;
+//
+//    double best_time = INT_MAX;
+//    int best_m = 1;
+//
+//    for (int m = 1; m <= n; m++) {
+//        double total_time = 0;
+//        for (int i = 1; i <= m; i++) {
+//            double time = lap_time * pow(circle_tire_ratio, i - 1);
+//            total_time += time;
+//        }
+//        if (total_time < best_time) {
+//            best_time = total_time;
+//            best_m = m;
+//        }
+//    }
+//
+//    cout << "Best m: " << best_m << endl;
+//    cout << "Best time: " << best_time << endl;
+//    return 0;
+//}
+// n = 2
+// best_m = 1
+// 2 -> 
+// 1 1
