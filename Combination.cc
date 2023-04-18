@@ -1,24 +1,27 @@
 // C++ program to find out all combinations of
 // positive numbers that add upto given number
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
 /* arr - array to store the combination
 	index - next location in array
 	num - given number
 	reducedNum - reduced number */
-void findCombinationsUtil(int arr[], int index,
-					int num, int reducedNum)
+void findCombinationsUtil(int arr[], int index, int num, int reducedNum, int numPeo)
 {
 	// Base condition
 	if (reducedNum < 0)
 		return;
 
 	// If combination is found, print it
-	if (reducedNum == 0)
+	if (reducedNum == 0 && index >= numPeo && numPeo+2 >= index )
 	{
-		for (int i = 0; i < index; i++)
-			cout << arr[i] << " ";
+		vector<int> temp;
+		for( int i = 0; i < index; i++)
+			temp.push_back(arr[i]);
+		reverse( temp.begin() , temp.end() );
+		for( int i = 0 ; i < index ; i++ )
+			cout << temp[i] << " ";
 		cout << endl;
 		return;
 	}
@@ -33,30 +36,30 @@ void findCombinationsUtil(int arr[], int index,
 	{
 		// next element of array is k
 		arr[index] = k;
-
+		
 		// call recursively with reduced number
-		findCombinationsUtil(arr, index + 1, num, reducedNum - k);
+		findCombinationsUtil(arr, index + 1, num, reducedNum - k , numPeo);
 	}
 }
 
 /* Function to find out all combinations of
 positive numbers that add upto given number.
 It uses findCombinationsUtil() */
-void findCombinations(int n)
+void findCombinations(int n , int numPeo)
 {
 	// array to store the combinations
 	// It can contain max n elements
 	int arr[n];
 
 	//find all combinations
-	findCombinationsUtil(arr, 0, n, n);
+	findCombinationsUtil(arr, 0, n, n, numPeo);
 }
 
 // Driver code
 int main()
 {
-	int n;
-	cin >> n;
-	findCombinations(n);
+	int n, numPeo;
+	cin >> n >> numPeo;
+	findCombinations(n , numPeo );
 	return 0;
 }
