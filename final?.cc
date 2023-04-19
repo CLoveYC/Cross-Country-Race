@@ -3,7 +3,8 @@ using namespace std;
 
 double best_time = INT_MAX;
 vector<int> ans;
-void findCombinationsUtil(int arr[], int index, int num, int reducedNum, int numPeo, vector<int>& t)
+
+void findCombinationsUtil(int arr[], int index, int num, int reducedNum, int numPeo, vector<int>& t, double circle, double lap)
 {
 
 	if (reducedNum < 0)
@@ -23,7 +24,7 @@ void findCombinationsUtil(int arr[], int index, int num, int reducedNum, int num
 		for( int cir = 0 ; cir < index ; cir++ )
 			for(int i=0 ; i<temp[cir] ; i++)
 			{
-				time += t[cir%numPeo] * pow(1.1 , i) * pow(1.2, cir/numPeo);
+				time += t[cir%numPeo] * pow(circle , i) * pow(lap, cir/numPeo);
 //				cout << time << " " << t[cir%3] << " " << pow(1.1 , i) << " " << pow(1.2, cir/numPeo) << endl;
 			}
 //		cout << time << endl;
@@ -43,15 +44,15 @@ void findCombinationsUtil(int arr[], int index, int num, int reducedNum, int num
 	{
 		arr[index] = k;
 		
-		findCombinationsUtil(arr, index + 1, num, reducedNum - k , numPeo, t);
+		findCombinationsUtil(arr, index + 1, num, reducedNum - k , numPeo, t, circle, lap);
 	}
 }
 
-void findCombinations(int n , int numPeo, vector<int>& t)
+void findCombinations(int n , int numPeo, vector<int>& t, double circle, double lap)
 {
 	int arr[n];
 
-	findCombinationsUtil(arr, 0, n, n, numPeo, t);
+	findCombinationsUtil(arr, 0, n, n, numPeo, t, circle, lap);
 }
 
 int main()
@@ -60,16 +61,19 @@ int main()
     cin.tie(0); cout.tie(0);
  
     int n, numPeo = 0;
+    
     cin >> n >> numPeo;
-    vector<int> t;
+	vector<int> t;
     t.resize(numPeo,0);
     for(int i = 0 ; i < numPeo ; i++ )	cin >> t[i];
-    
-	findCombinations(n, numPeo, t );
+
+	double circle, lap;
+	cin >> circle >> lap;
+   
+	findCombinations(n, numPeo, t , circle, lap);
 	
 	cout << best_time << endl;
 	for( vector<int>::iterator i = ans.begin() ; i != ans.end() ; i++ ) cout << *i << " ";
- 
     return 0;
 }
  
